@@ -87,32 +87,8 @@ func getUserInfo(state string, code string) ([]byte, error) {
 	return contents, nil
 }
 
-func ReadCookie(w http.ResponseWriter, r *http.Request) {
-	c, err := r.Cookie("token")
-	if err != nil {
-		w.Write([]byte("error in reading cookie : " + err.Error() + "\n"))
-	} else {
-		value := c.Value
-		w.Write([]byte("cookie has : " + value + "\n"))
-	}
-}
-
-func CreateCookie(w http.ResponseWriter, r *http.Request) {
-	c := http.Cookie{
-		Name:   "token",
-		Value:  "ffffff",
-		HttpOnly: true, // disabling JavaScript access to cookies
-		MaxAge: 3600}
-	http.SetCookie(w, &c)
-
-	w.Write([]byte("new cookie created!\n"))
-}
-
 func main() {
 	startingInit()
-
-	http.HandleFunc("/create_cookie", CreateCookie)
-	http.HandleFunc("/read_cookie", ReadCookie)
 
 	http.HandleFunc("/", handleMain)
 	http.HandleFunc("/login", googleLogin)

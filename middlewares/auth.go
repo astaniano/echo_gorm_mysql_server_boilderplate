@@ -23,7 +23,7 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 		if len(extractedToken) == 2 {
 			clientToken = strings.TrimSpace(extractedToken[1])
 		} else {
-			return c.JSON(http.StatusBadRequest, helpers.Error_res("Incorrect Format of Authorization Token"))
+			return c.JSON(http.StatusBadRequest, helpers.Res("Incorrect Format of Authorization Token"))
 		}
 
 		jwtWrapper := auth.JwtWrapper{
@@ -32,10 +32,11 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		claims, err := jwtWrapper.ValidateToken(clientToken)
 		if err != nil {
-			return c.JSON(http.StatusUnauthorized, helpers.Error_res(err.Error()))
+			return c.JSON(http.StatusUnauthorized, helpers.Res(err.Error()))
 		}
 
 		c.Set("email", claims.Email)
+		c.Set("user_id", claims.UserId)
 		return next(c)
 	}
 }

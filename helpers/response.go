@@ -1,11 +1,11 @@
 package helpers
 
-type ErrRes struct {
-	Message string `json:"message"`
+type Response struct {
+	Message string `json:"msg"`
 }
 
 // return example { Message: "Error 1062: Duplicate entry 'bro@gmail.com' for key 'users.email'"}
-func Error_res(errMsg string) *ErrRes {
-	res := &ErrRes{Message: errMsg}
+func Res(msg string) *Response {
+	res := &Response{Message: msg}
 	return res
 }

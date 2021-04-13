@@ -12,25 +12,25 @@ import (
 	"time"
 )
 
-// Signup creates a controllers_user in db
+// Signup creates a controllers_post in db
 func Signup(c echo.Context) error {
 	user := new(models_user.User)
 
 	if err := c.Bind(user); err != nil {
-		return c.JSON(http.StatusBadRequest, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 	if err := c.Validate(user); err != nil {
-		return c.JSON(http.StatusBadRequest, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 
 	err := user.HashPassword(user.Password)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusInternalServerError, helpers.Res(err.Error()))
 	}
 
 	err = user.CreateUserRecord()
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusInternalServerError, helpers.Res(err.Error()))
 	}
 
 	user.Password = ""
@@ -49,20 +49,20 @@ func Login(c echo.Context) error {
 	var user models_user.User
 
 	if err := c.Bind(&payload); err != nil {
-		return c.JSON(http.StatusBadRequest, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 	if err := c.Validate(&payload); err != nil {
-		return c.JSON(http.StatusBadRequest, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 
 	result := database.DB.Where("email = ?", payload.Email).First(&user)
 	if result.Error == gorm.ErrRecordNotFound {
-		return c.JSON(http.StatusUnauthorized, helpers.Error_res("invalid user credentials"))
+		return c.JSON(http.StatusUnauthorized, helpers.Res("invalid user credentials"))
 	}
 
 	err := user.CheckPassword(payload.Password)
 	if err != nil {
-		return c.JSON(http.StatusUnauthorized, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusUnauthorized, helpers.Res(err.Error()))
 	}
 
 	jwtWrapper := auth.JwtWrapper{
@@ -71,9 +71,9 @@ func Login(c echo.Context) error {
 		ExpirationHours: 24,
 	}
 
-	signedToken, err := jwtWrapper.GenerateToken(user.Email)
+	signedToken, err := jwtWrapper.GenerateToken(user.Email, user.ID)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helpers.Error_res(err.Error()))
+		return c.JSON(http.StatusInternalServerError, helpers.Res(err.Error()))
 	}
 
 	cookie := &http.Cookie{
@@ -87,7 +87,7 @@ func Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, "ok")
 }
 
-// Profile returns controllers_user data
+// Profile returns controllers_post data
 func Profile(c echo.Context) error {
 	var user models_user.User
 
@@ -96,11 +96,11 @@ func Profile(c echo.Context) error {
 	result := database.DB.Where("email = ?", email.(string)).First(&user)
 
 	if result.Error == gorm.ErrRecordNotFound {
-		return c.JSON(http.StatusNotFound, helpers.Error_res("user not found"))
+		return c.JSON(http.StatusNotFound, helpers.Res("user not found"))
 	}
 
 	if result.Error != nil {
-		return c.JSON(http.StatusInternalServerError, helpers.Error_res("could not get controllers_user profile"))
+		return c.JSON(http.StatusInternalServerError, helpers.Res("could not get controllers_post profile"))
 	}
 
 	user.Password = ""

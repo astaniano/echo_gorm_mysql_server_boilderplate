@@ -1,9 +1,14 @@
 // signup
-curl -i -X POST http://localhost:8001/api/signup -H 'Content-Type: application/json' -d '{"email": "bro@gmail.com", "password": "123456", "first_name": "bro", "last_name": "jjjj"}'
+curl -i -X POST http://localhost:8001/api/signup -H 'Content-Type: application/json' -d '{"email": "bro@ffffff.com", "password": "123456", "first_name": "bro", "last_name": "jjjj"}'
 
 // login
-curl -i -X POST http://localhost:8001/api/login -H 'Content-Type: application/json' -d '{"email": "bro@gmail.com", "password": "123456"}'
+curl -i -X POST http://localhost:8001/api/login -H 'Content-Type: application/json' -d '{"email": "bro@ffffff.com", "password": "123456"}'
 
 // profile
-curl -i -X GET http://localhost:8001/api/user/profile -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6ImJyb0BnbWFpbC5jb20iLCJleHAiOjE2MTgzNTU5NDYsImlzcyI6IkF1dGhTZXJ2aWNlIn0.xsFD0M3PI168j6jx0vRMCxUc3tupvrzznE-CIy2tXu8"
+curl -i -X GET http://localhost:8001/api/user/profile -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjIsIkVtYWlsIjoiYnJvQGZmZmZmZi5jb20iLCJleHAiOjE2MTgzOTYzMzcsImlzcyI6IkF1dGhTZXJ2aWNlIn0.ggrpaa-Zwefq-jLm7xfBVc9PT-VdUbSNYN8RgiaFiAE"
 
+// create post
+curl -i -X POST http://localhost:8001/api/post -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjIsIkVtYWlsIjoiYnJvQGZmZmZmZi5jb20iLCJleHAiOjE2MTgzOTYzMzcsImlzcyI6IkF1dGhTZXJ2aWNlIn0.ggrpaa-Zwefq-jLm7xfBVc9PT-VdUbSNYN8RgiaFiAE" -d '{"title": "uuuuu", "body": "iiiii"}'
+
+// update post
+curl -i -X PUT http://localhost:8001/api/post -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjIsIkVtYWlsIjoiYnJvQGZmZmZmZi5jb20iLCJleHAiOjE2MTgzOTYzMzcsImlzcyI6IkF1dGhTZXJ2aWNlIn0.ggrpaa-Zwefq-jLm7xfBVc9PT-VdUbSNYN8RgiaFiAE" -d '{"id": 3, "title": "hhhhh", "body": "hhhhh"}'
