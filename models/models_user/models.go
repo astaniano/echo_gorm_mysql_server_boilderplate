@@ -5,13 +5,13 @@ import (
 	"myapp/database"
 )
 
-// User defines the controllers_user in db
+// User defines the user in db
 type User struct {
-	// gorm.Model
-	FirstName string `json:"first_name" validate:"required"`
-	LastName  string `json:"last_name" validate:"required"`
-	Email     string `json:"email" gorm:"unique" validate:"required,email"`
-	Password  string `json:"password" validate:"required"`
+	ID        int    `gorm:"primary_key;AUTO_INCREMENT" json:"id"`
+	FirstName string `gorm:"type:VARCHAR(100);NOT NULL" json:"first_name" validate:"required"`
+	LastName  string `gorm:"type:VARCHAR(100);NOT NULL" json:"last_name" validate:"required"`
+	Email     string `gorm:"type:VARCHAR(255);NOT NULL;UNIQUE" json:"email" validate:"required,email"`
+	Password  string `gorm:"type:CHAR(60);NOT NULL" json:"password" validate:"required"`
 }
 
 // CreateUserRecord creates a controllers_user record in the database

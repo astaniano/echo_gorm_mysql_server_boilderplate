@@ -9,12 +9,8 @@ import (
 )
 
 func main() {
-	err := database.InitDatabase()
-	if err != nil {
-		panic("could not open database connection")
-	}
-
 	helpers.LoadEnvVariables()
+	database.InitDatabase()
 
 	e := echo.New()
 	validators.InitValidator(e)

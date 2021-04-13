@@ -1,5 +1,5 @@
 // signup
-curl -X POST http://localhost:8001/api/signup -H 'Content-Type: application/json' -d '{"email": "bro@gmail.com", "password": "123456", "first_name": "bro", "last_name": "jjjj"}'
+curl -i -X POST http://localhost:8001/api/signup -H 'Content-Type: application/json' -d '{"email": "bro@gmail.com", "password": "123456", "first_name": "bro", "last_name": "jjjj"}'
 
 // login
 curl -i -X POST http://localhost:8001/api/login -H 'Content-Type: application/json' -d '{"email": "bro@gmail.com", "password": "123456"}'
@@ -7,9 +7,3 @@ curl -i -X POST http://localhost:8001/api/login -H 'Content-Type: application/js
 // profile
 curl -i -X GET http://localhost:8001/api/user/profile -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJFbWFpbCI6ImJyb0BnbWFpbC5jb20iLCJleHAiOjE2MTgzNTU5NDYsImlzcyI6IkF1dGhTZXJ2aWNlIn0.xsFD0M3PI168j6jx0vRMCxUc3tupvrzznE-CIy2tXu8"
 
-
-
-
-
-curl -X GET http://localhost:8001/create_cookie
-curl -X GET http://localhost:8001/read_cookie

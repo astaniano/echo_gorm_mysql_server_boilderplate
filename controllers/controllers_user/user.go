@@ -66,7 +66,7 @@ func Login(c echo.Context) error {
 	}
 
 	jwtWrapper := auth.JwtWrapper{
-		SecretKey:       os.Getenv("TOKEN_SECRET_KEY"),
+		SecretKey:       os.Getenv("ACCESS_TOKEN_SECRET_KEY"),
 		Issuer:          "AuthService",
 		ExpirationHours: 24,
 	}

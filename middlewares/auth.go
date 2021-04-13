@@ -19,9 +19,7 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 
 		clientToken := cookie.Value
-
 		extractedToken := strings.Split(clientToken, "Bearer ")
-
 		if len(extractedToken) == 2 {
 			clientToken = strings.TrimSpace(extractedToken[1])
 		} else {
@@ -29,10 +27,9 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 
 		jwtWrapper := auth.JwtWrapper{
-			SecretKey: os.Getenv("TOKEN_SECRET_KEY"),
+			SecretKey: os.Getenv("ACCESS_TOKEN_SECRET_KEY"),
 			Issuer:    "AuthService",
 		}
-
 		claims, err := jwtWrapper.ValidateToken(clientToken)
 		if err != nil {
 			return c.JSON(http.StatusUnauthorized, helpers.Error_res(err.Error()))
