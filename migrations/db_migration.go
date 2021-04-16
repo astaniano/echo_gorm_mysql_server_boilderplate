@@ -10,5 +10,5 @@ import (
 func main() {
 	helpers.LoadEnvVariables()
 	database.InitDatabase()
-	database.DB.AutoMigrate(&models_post.Post{}, &models_user.User{})
+	database.DB.AutoMigrate(&models_user.User{}, &models_post.Post{})
 }

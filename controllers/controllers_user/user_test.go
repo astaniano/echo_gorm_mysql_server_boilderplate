@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 	"myapp/database"
+	"myapp/helpers"
 	"myapp/models/models_user"
 	"myapp/validators"
 	"net/http"
@@ -33,6 +34,7 @@ func TestSignUp(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
+	helpers.LoadEnvVariables()
 	err = database.InitDatabase()
 	assert.NoError(t, err)
 

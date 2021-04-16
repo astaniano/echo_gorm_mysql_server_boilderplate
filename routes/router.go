@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/labstack/echo/v4"
-	"myapp/controllers/controllers_user"
 	"myapp/controllers/controllers_post"
+	"myapp/controllers/controllers_user"
 	"myapp/middlewares"
 )
 
@@ -13,14 +13,15 @@ func SetupRouter(e *echo.Echo) {
 		api.POST("/login", controllers_user.Login)
 		api.POST("/signup", controllers_user.Signup)
 
-		user := api.Group("/user")
-		user.Use(middlewares.Authz)
+		loggedIn := api.Group("")
+		loggedIn.Use(middlewares.Authz)
+
+		user := loggedIn.Group("/user")
 		{
 			user.GET("/profile", controllers_user.Profile)
 		}
 
-		post := api.Group("/post")
-		post.Use(middlewares.Authz)
+		post := loggedIn.Group("/post")
 		{
 			post.POST("", controllers_post.Create)
 			post.PUT("", controllers_post.Update)

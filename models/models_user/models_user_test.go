@@ -3,6 +3,7 @@ package models_user
 import (
 	"github.com/stretchr/testify/assert"
 	"myapp/database"
+	"myapp/helpers"
 	"os"
 	"testing"
 )
@@ -21,6 +22,7 @@ func TestHashPassword(t *testing.T) {
 func TestCreateUserRecord(t *testing.T) {
 	var userResult User
 
+	helpers.LoadEnvVariables()
 	err := database.InitDatabase()
 	if err != nil {
 		t.Error(err)

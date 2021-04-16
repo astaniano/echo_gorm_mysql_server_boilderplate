@@ -12,18 +12,39 @@ import (
 	"time"
 )
 
-// Signup creates a controllers_post in db
+// LoginPayload login body
+type SignupPayload struct {
+	FirstName string `json:"first_name" validate:"required"`
+	LastName  string `json:"last_name" validate:"required"`
+	Email     string `json:"email" validate:"required,email"`
+	Password  string `json:"password" validate:"required"`
+}
+
+// Signup godoc
+// @Summary registers a new user
+// @Description creates user
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param user_info body SignupPayload true "Sign up the user"
+// @Success 201 {object} models_user.User
+// @Failure 400 {object} helpers.Response
+// @Failure 500 {object} helpers.Response
+// @Router /api/signup [post]
 func Signup(c echo.Context) error {
-	user := new(models_user.User)
+	var payload SignupPayload
 
-	if err := c.Bind(user); err != nil {
+	if err := c.Bind(&payload); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
-	if err := c.Validate(user); err != nil {
+	if err := c.Validate(&payload); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 
-	err := user.HashPassword(user.Password)
+	user := models_user.User{
+		FirstName: payload.FirstName, LastName: payload.LastName, Email: payload.Email,
+	}
+	err := user.HashPassword(payload.Password)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helpers.Res(err.Error()))
 	}
@@ -45,8 +66,8 @@ type LoginPayload struct {
 
 // Login logs users in
 func Login(c echo.Context) error {
-	var payload LoginPayload
-	var user models_user.User
+	var payload *LoginPayload
+	var user *models_user.User
 
 	if err := c.Bind(&payload); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
@@ -77,10 +98,10 @@ func Login(c echo.Context) error {
 	}
 
 	cookie := &http.Cookie{
-		Name:   "Authorization",
-		Value:  "Bearer " + signedToken,
+		Name:     "Authorization",
+		Value:    "Bearer " + signedToken,
 		HttpOnly: true, // disabling JavaScript access to cookie
-		Expires: time.Now().Add(24 * time.Hour),
+		Expires:  time.Now().Add(24 * time.Hour),
 	}
 	c.SetCookie(cookie)
 
