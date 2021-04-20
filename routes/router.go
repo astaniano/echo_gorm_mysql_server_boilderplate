@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/labstack/echo/v4"
 	"myapp/controllers"
+	"myapp/controllers/post_controller"
 	"myapp/middlewares"
 )
 
@@ -38,9 +39,13 @@ func SetupRouter(e *echo.Echo) {
 
 			post := authenticated.Group("/post")
 			{
-				post.POST("", controllers.CreatePost)
-				post.PUT("/:id", controllers.UpdatePost)
-				post.DELETE("/:id", controllers.DeletePost)
+				post.GET("/json", post_controller.GetAllPostsJSON)
+				post.GET("/xml", post_controller.GetAllPostsXML)
+				post.GET("/:id/json", post_controller.GetPostJSON)
+				post.GET("/:id/xml", post_controller.GetPostXML)
+				post.POST("", post_controller.CreatePost)
+				post.PUT("/:id", post_controller.UpdatePost)
+				post.DELETE("/:id", post_controller.DeletePost)
 			}
 		}
 	}

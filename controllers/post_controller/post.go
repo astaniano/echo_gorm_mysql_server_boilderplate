@@ -1,4 +1,4 @@
-package controllers
+package post_controller
 
 import (
 	"github.com/labstack/echo/v4"
@@ -43,7 +43,7 @@ func UpdatePost(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 
-	// check if user is updating his own post
+	// check if user is not updating somebody elses post
 	userIdFromToken := c.Get("user_id").(int)
 	postFromDB, err := postFromReq.GetPostByID(postIdFromReq)
 	if err != nil {
@@ -70,7 +70,7 @@ func DeletePost(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helpers.Res("postID was not in the url"))
 	}
 
-	// check if user is deleting his own post
+	// check if user is not deleting somebody elses post
 	userIdFromToken := c.Get("user_id").(int)
 	PostFromDB := models.Post{}
 	getPostRes := database.DB.First(&PostFromDB, postIdFromReq)
