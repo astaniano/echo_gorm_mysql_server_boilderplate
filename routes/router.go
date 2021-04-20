@@ -2,28 +2,29 @@ package routes
 
 import (
 	"github.com/labstack/echo/v4"
-	"myapp/controllers"
+	"myapp/controllers/oauth_controller"
 	"myapp/controllers/post_controller"
+	"myapp/controllers/user_controller"
 	"myapp/middlewares"
 )
 
 func SetupRouter(e *echo.Echo) {
 	api := e.Group("/api/v1")
 	{
-		api.POST("/signup", controllers.Signup)
+		api.POST("/signup", user_controller.Signup)
 
 		login := api.Group("/login")
 		{
-			login.POST("", controllers.Login)
+			login.POST("", user_controller.Login)
 
 			// http://localhost:8001/api/v1/login/oauth
-			login.GET("/oauth", controllers.OAuthStart)
+			login.GET("/oauth", oauth_controller.OAuthStart)
 
-			login.GET("/google", controllers.GoogleLogin)
-			login.GET("/google/callback", controllers.GoogleLoginCallback)
+			login.GET("/google", oauth_controller.GoogleLogin)
+			login.GET("/google/callback", oauth_controller.GoogleLoginCallback)
 
-			login.GET("/fb", controllers.FBLogin)
-			login.GET("/fb/callback", controllers.FBLoginCallback)
+			login.GET("/fb", oauth_controller.FBLogin)
+			login.GET("/fb/callback", oauth_controller.FBLoginCallback)
 
 			//login.GET("/twitter", controllers.FBLogin)
 			//login.GET("/twitter/callback", controllers.FBLoginCallback)
@@ -34,7 +35,7 @@ func SetupRouter(e *echo.Echo) {
 		{
 			user := authenticated.Group("/user")
 			{
-				user.GET("/profile", controllers.UserProfile)
+				user.GET("/profile", user_controller.UserProfile)
 			}
 
 			post := authenticated.Group("/post")

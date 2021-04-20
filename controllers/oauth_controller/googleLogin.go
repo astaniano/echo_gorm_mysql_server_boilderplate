@@ -1,14 +1,14 @@
-package controllers
+package oauth_controller
 
 import (
 	"fmt"
 	"github.com/labstack/echo/v4"
-	"myapp/constants"
-	"os"
-	"io/ioutil"
-	"net/http"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
+	"io/ioutil"
+	"myapp/constants"
+	"net/http"
+	"os"
 )
 
 var googleOauthConfig oauth2.Config

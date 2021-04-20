@@ -1,4 +1,4 @@
-package controllers
+package oauth_controller
 
 import (
 	"github.com/labstack/echo/v4"

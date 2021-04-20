@@ -1,4 +1,4 @@
-package controllers
+package oauth_controller
 
 import (
 	"fmt"
@@ -7,9 +7,9 @@ import (
 	"golang.org/x/oauth2/facebook"
 	"io/ioutil"
 	"myapp/constants"
+	"net/http"
 	"net/url"
 	"os"
-	"net/http"
 )
 
 var fbOauthConfig *oauth2.Config
@@ -20,8 +20,8 @@ func FBLogin(c echo.Context) error {
 		RedirectURL:  constants.HOST + constants.PORT + "/api/v1/login/fb/callback",
 		ClientID:     os.Getenv("FB_CLIENT_ID"),
 		ClientSecret: os.Getenv("FB_CLIENT_SECRET"),
-		Scopes:   []string{"public_profile", "email"},
-		Endpoint: facebook.Endpoint,
+		Scopes:       []string{"public_profile", "email"},
+		Endpoint:     facebook.Endpoint,
 	}
 
 	urlToRedirect := fbOauthConfig.AuthCodeURL(constants.OAUTH_STATE_STRING)
