@@ -11,7 +11,6 @@ require (
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/joho/godotenv v1.3.0
-	github.com/kr/pretty v0.1.0 // indirect
 	github.com/labstack/echo/v4 v4.2.2
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
@@ -21,6 +20,7 @@ require (
 	github.com/swaggo/swag v1.7.0
 	golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2
 	golang.org/x/net v0.0.0-20210414194228-064579744ee0 // indirect
+	golang.org/x/oauth2 v0.0.0-20210413134643-5e61552d6c78
 	golang.org/x/sys v0.0.0-20210414055047-fe65e336abe0 // indirect
 	golang.org/x/tools v0.1.0 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect

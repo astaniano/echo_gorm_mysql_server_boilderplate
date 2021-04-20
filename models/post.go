@@ -1,4 +1,4 @@
-package models_post
+package models
 
 import (
 	"myapp/database"
@@ -6,8 +6,8 @@ import (
 
 // User defines the post in db
 type Post struct {
-	ID     int    `gorm:"primary_key;AUTO_INCREMENT" json:"id"`
-	UserID int    `gorm:"type:BIGINT;NOT NULL" json:"user_id"`
+	ID     int    `gorm:"primary_key;AUTO_INCREMENT"`
+	UserID int    `gorm:"type:BIGINT;NOT NULL"`
 	Title  string `gorm:"type:VARCHAR(300);NOT NULL" json:"title" validate:"required"`
 	Body   string `gorm:"type:BLOB;NOT NULL" json:"body" validate:"required"`
 }
@@ -41,3 +41,13 @@ func (post *Post) UpdatePostRecord() error {
 
 	return nil
 }
+
+//// DeletePostRecord updates a post record in the database
+//func (post *Post) DeletePostRecord() error {
+//	result := database.DB.Save(&post)
+//	if result.Error != nil {
+//		return result.Error
+//	}
+//
+//	return nil
+//}

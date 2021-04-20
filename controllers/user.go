@@ -1,4 +1,4 @@
-package controllers_user
+package controllers
 
 import (
 	"github.com/labstack/echo/v4"
@@ -6,7 +6,7 @@ import (
 	"myapp/auth"
 	"myapp/database"
 	"myapp/helpers"
-	"myapp/models/models_user"
+	"myapp/models"
 	"net/http"
 	"os"
 	"time"
@@ -41,7 +41,7 @@ func Signup(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 
-	user := models_user.User{
+	user := models.User{
 		FirstName: payload.FirstName, LastName: payload.LastName, Email: payload.Email,
 	}
 	err := user.HashPassword(payload.Password)
@@ -66,8 +66,8 @@ type LoginPayload struct {
 
 // Login logs users in
 func Login(c echo.Context) error {
-	var payload *LoginPayload
-	var user *models_user.User
+	var payload LoginPayload
+	var user models.User
 
 	if err := c.Bind(&payload); err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
@@ -108,9 +108,9 @@ func Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, "ok")
 }
 
-// Profile returns controllers_post data
-func Profile(c echo.Context) error {
-	var user models_user.User
+// UserProfile returns controllers_post data
+func UserProfile(c echo.Context) error {
+	var user models.User
 
 	email := c.Get("email") // from the authorization middleware
 

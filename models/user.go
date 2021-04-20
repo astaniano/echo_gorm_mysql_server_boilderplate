@@ -1,9 +1,8 @@
-package models_user
+package models
 
 import (
 	"golang.org/x/crypto/bcrypt"
 	"myapp/database"
-	"myapp/models/models_post"
 )
 
 // User defines the user in db
@@ -13,7 +12,7 @@ type User struct {
 	LastName  string `gorm:"type:VARCHAR(100);NOT NULL" json:"last_name" validate:"required"`
 	Email     string `gorm:"type:VARCHAR(255);NOT NULL;UNIQUE" json:"email" validate:"required,email"`
 	Password  string `gorm:"type:CHAR(60);NOT NULL" json:"password" validate:"required"`
-	Posts     []models_post.Post
+	Posts     []Post
 }
 
 // CreateUserRecord creates a controllers_post record in the database

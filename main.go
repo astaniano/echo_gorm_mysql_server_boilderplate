@@ -3,6 +3,8 @@ package main
 import (
 	"github.com/labstack/echo/v4"
 	echoSwagger "github.com/swaggo/echo-swagger"
+	"log"
+	"myapp/constants"
 	"myapp/database"
 	_ "myapp/docs"
 	"myapp/helpers"
@@ -19,13 +21,17 @@ import (
 // @contact.email support@swagger.io
 
 func main() {
-	helpers.LoadEnvVariables()
-	database.InitDatabase()
+	if helpers.LoadEnvVariables() != nil {
+		log.Fatal("could not load env variables")
+	}
+	if database.InitDatabase() != nil {
+		log.Fatal("could not connect to db")
+	}
 
 	e := echo.New()
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	validators.InitValidator(e)
 	routes.SetupRouter(e)
 
-	e.Logger.Fatal(e.Start(":8001"))
+	e.Logger.Fatal(e.Start(constants.PORT))
 }

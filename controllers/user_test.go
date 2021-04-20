@@ -1,4 +1,4 @@
-package controllers_user
+package controllers
 
 import (
 	"bytes"
@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"myapp/database"
 	"myapp/helpers"
-	"myapp/models/models_user"
+	"myapp/models"
 	"myapp/validators"
 	"net/http"
 	"net/http/httptest"
@@ -15,9 +15,9 @@ import (
 )
 
 func TestSignUp(t *testing.T) {
-	var actualResult models_user.User
+	var actualResult models.User
 
-	user := models_user.User{
+	user := models.User{
 		FirstName: "Test User",
 		LastName:  "Test User",
 		Email:     "jwt@email.com",
@@ -38,7 +38,7 @@ func TestSignUp(t *testing.T) {
 	err = database.InitDatabase()
 	assert.NoError(t, err)
 
-	err = database.DB.AutoMigrate(&models_user.User{})
+	err = database.DB.AutoMigrate(&models.User{})
 	assert.NoError(t, err)
 
 	err = Signup(c)
@@ -86,10 +86,13 @@ func TestLogin(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
+	err = helpers.LoadEnvVariables()
+	assert.NoError(t, err)
+
 	err = database.InitDatabase()
 	assert.NoError(t, err)
 
-	err = database.DB.AutoMigrate(&models_user.User{})
+	err = database.DB.AutoMigrate(&models.User{})
 	assert.NoError(t, err)
 
 	err = Login(c)
@@ -131,27 +134,34 @@ func TestLoginInvalidCredentials(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 
+	err = helpers.LoadEnvVariables()
+	assert.NoError(t, err)
+
 	err = database.InitDatabase()
 	assert.NoError(t, err)
 
-	err = database.DB.AutoMigrate(&models_user.User{})
+	err = database.DB.AutoMigrate(&models.User{})
 	assert.NoError(t, err)
 
 	err = Login(c)
 	assert.Equal(t, http.StatusUnauthorized, rec.Code)
 
-	database.DB.Unscoped().Where("email = ?", controllersUser.Email).Delete(&models_user.User{})
+	database.DB.Unscoped().Where("email = ?", controllersUser.Email).Delete(&models.User{})
 }
 
 func TestProfile(t *testing.T) {
-	var profile models_user.User
+	var profile models.User
 
-	err := database.InitDatabase()
+	err := helpers.LoadEnvVariables()
 	assert.NoError(t, err)
 
-	database.DB.AutoMigrate(&models_user.User{})
+	err = database.InitDatabase()
+	assert.NoError(t, err)
 
-	user := models_user.User{
+	err = database.DB.AutoMigrate(&models.User{})
+	assert.NoError(t, err)
+
+	user := models.User{
 		FirstName: "Test User",
 		LastName:  "Test User",
 		Email:     "jwt@email.com",
@@ -169,7 +179,7 @@ func TestProfile(t *testing.T) {
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 	c.Set("email", "jwt@email.com")
-	Profile(c)
+	UserProfile(c)
 
 	err = json.Unmarshal(rec.Body.Bytes(), &profile)
 	assert.NoError(t, err)
@@ -180,24 +190,27 @@ func TestProfile(t *testing.T) {
 }
 
 func TestProfileNotFound(t *testing.T) {
-	var profile models_user.User
+	var profile models.User
 
-	err := database.InitDatabase()
+	err := helpers.LoadEnvVariables()
 	assert.NoError(t, err)
 
-	database.DB.AutoMigrate(&models_user.User{})
+	err = database.InitDatabase()
+	assert.NoError(t, err)
+
+	database.DB.AutoMigrate(&models.User{})
 
 	e := echo.New()
 	req, err := http.NewRequest(http.MethodGet, "/api/user/profile", nil)
 	rec := httptest.NewRecorder()
 	c := e.NewContext(req, rec)
 	c.Set("email", "nooooo@email.com")
-	Profile(c)
+	UserProfile(c)
 
 	err = json.Unmarshal(rec.Body.Bytes(), &profile)
 	assert.NoError(t, err)
 
 	assert.Equal(t, http.StatusNotFound, rec.Code)
 
-	database.DB.Unscoped().Where("email = ?", "jwt@email.com").Delete(&models_user.User{})
+	database.DB.Unscoped().Where("email = ?", "jwt@email.com").Delete(&models.User{})
 }
