@@ -3,7 +3,6 @@ package post_controller
 import (
 	"github.com/labstack/echo/v4"
 	"myapp/constants"
-	"myapp/database"
 	"myapp/helpers"
 	"myapp/models"
 	"net/http"
@@ -16,9 +15,9 @@ func getPost(c echo.Context, responseType string) error {
 		return c.JSON(http.StatusBadRequest, helpers.Res("postID was not in the url"))
 	}
 
-	postFromDB := &models.Post{}
-	getPostRes := database.DB.First(postFromDB, postIdFromReq)
-	if getPostRes.Error != nil {
+	var postModel models.Post
+	postFromDB, err := postModel.GetPostByID(postIdFromReq)
+	if err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.Res("could not find post for the specified id"))
 	}
 

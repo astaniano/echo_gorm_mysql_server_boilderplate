@@ -25,9 +25,6 @@ func SetupRouter(e *echo.Echo) {
 
 			login.GET("/fb", oauth_controller.FBLogin)
 			login.GET("/fb/callback", oauth_controller.FBLoginCallback)
-
-			//login.GET("/twitter", controllers.FBLogin)
-			//login.GET("/twitter/callback", controllers.FBLoginCallback)
 		}
 
 		authenticated := api.Group("")

@@ -12,19 +12,29 @@ type Post struct {
 	Body   string `gorm:"type:BLOB;NOT NULL" json:"body" xml:"body" validate:"required"`
 }
 
-func (post *Post) GetPostByID(postId int) (*Post, error) {
-	var FoundPost *Post
-	result := database.DB.First(&FoundPost, postId)
+func (post *Post) GetAllPosts() ([]Post, error) {
+	var postsFromDB []Post
+	result := database.DB.Find(&postsFromDB)
 	if result.Error != nil {
-		return FoundPost, result.Error
+		return postsFromDB, result.Error
 	}
 
-	return FoundPost, nil
+	return postsFromDB, nil
+}
+
+func (post *Post) GetPostByID(postId int) (*Post, error) {
+	foundPost := new(Post)
+	result := database.DB.First(foundPost, postId)
+	if result.Error != nil {
+		return foundPost, result.Error
+	}
+
+	return foundPost, nil
 }
 
 // CreatePostRecord creates a post record in the database
 func (post *Post) CreatePostRecord() error {
-	result := database.DB.Create(&post)
+	result := database.DB.Create(post)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -34,7 +44,7 @@ func (post *Post) CreatePostRecord() error {
 
 // UpdatePostRecord updates a post record in the database
 func (post *Post) UpdatePostRecord() error {
-	result := database.DB.Save(&post)
+	result := database.DB.Save(post)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -42,12 +52,12 @@ func (post *Post) UpdatePostRecord() error {
 	return nil
 }
 
-//// DeletePostRecord updates a post record in the database
-//func (post *Post) DeletePostRecord() error {
-//	result := database.DB.Save(&post)
-//	if result.Error != nil {
-//		return result.Error
-//	}
-//
-//	return nil
-//}
+// DeletePostByID updates a post record in the database
+func (post *Post) DeletePost() error {
+	result := database.DB.Delete(post)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}

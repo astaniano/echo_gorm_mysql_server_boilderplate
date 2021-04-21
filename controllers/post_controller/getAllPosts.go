@@ -4,16 +4,15 @@ import (
 	"encoding/xml"
 	"github.com/labstack/echo/v4"
 	"myapp/constants"
-	"myapp/database"
 	"myapp/helpers"
 	"myapp/models"
 	"net/http"
 )
 
 func getAllPosts(c echo.Context, responseType string) error {
-	var postsFromDB []models.Post
-	getPostRes := database.DB.Find(&postsFromDB)
-	if getPostRes.Error != nil {
+	var postModel models.Post
+	postsFromDB, err := postModel.GetAllPosts()
+	if err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.Res("could not get posts from db"))
 	}
 

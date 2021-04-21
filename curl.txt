@@ -12,22 +12,22 @@ curl -i -X GET http://localhost:8001/api/v1/user/profile -b "Authorization=Beare
 
 // POSTS API
 // get all posts xml
-curl -i -X GET http://localhost:8001/api/v1/post/xml -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE4OTk2ODI1LCJpc3MiOiJBdXRoU2VydmljZSJ9.5nDKMKXaFHUsrGuKCJ4JLOKDL_n-zocyLbcb8haBi_Q"
+curl -i -X GET http://localhost:8001/api/v1/post/xml -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo"
 
 // get all posts json
-curl -i -X GET http://localhost:8001/api/v1/post/json -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE4OTk2ODI1LCJpc3MiOiJBdXRoU2VydmljZSJ9.5nDKMKXaFHUsrGuKCJ4JLOKDL_n-zocyLbcb8haBi_Q"
+curl -i -X GET http://localhost:8001/api/v1/post/json -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo"
 
 // get post xml
-curl -i -X GET http://localhost:8001/api/v1/post/4/xml -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE4OTk2ODI1LCJpc3MiOiJBdXRoU2VydmljZSJ9.5nDKMKXaFHUsrGuKCJ4JLOKDL_n-zocyLbcb8haBi_Q"
+curl -i -X GET http://localhost:8001/api/v1/post/12/xml -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo"
 
 // get post json
-curl -i -X GET http://localhost:8001/api/v1/post/4/json -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE4OTk2ODI1LCJpc3MiOiJBdXRoU2VydmljZSJ9.5nDKMKXaFHUsrGuKCJ4JLOKDL_n-zocyLbcb8haBi_Q"
+curl -i -X GET http://localhost:8001/api/v1/post/12/json -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo"
 
 // create post
-curl -i -X POST http://localhost:8001/api/v1/post -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE4OTk2ODI1LCJpc3MiOiJBdXRoU2VydmljZSJ9.5nDKMKXaFHUsrGuKCJ4JLOKDL_n-zocyLbcb8haBi_Q" -d '{"title": "ggggg", "body": "vvvvvvv"}'
+curl -i -X POST http://localhost:8001/api/v1/post -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo" -d '{"title": "ggggg", "body": "vvvvvvv"}'
 
 // update post
-curl -i -X PUT http://localhost:8001/api/v1/post/2 -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE4OTk2ODI1LCJpc3MiOiJBdXRoU2VydmljZSJ9.5nDKMKXaFHUsrGuKCJ4JLOKDL_n-zocyLbcb8haBi_Q" -d '{"title": "hhhhh", "body": "hhhhh"}'
+curl -i -X PUT http://localhost:8001/api/v1/post/11 -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo" -d '{"title": "hhhhh", "body": "hhhhh"}'
 
 // delete post
-curl -i -X DELETE http://localhost:8001/api/v1/post/2 -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE4OTk2ODI1LCJpc3MiOiJBdXRoU2VydmljZSJ9.5nDKMKXaFHUsrGuKCJ4JLOKDL_n-zocyLbcb8haBi_Q"
+curl -i -X DELETE http://localhost:8001/api/v1/post/11 -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo"
