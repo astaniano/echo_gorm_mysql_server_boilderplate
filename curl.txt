@@ -24,7 +24,7 @@ curl -i -X GET http://localhost:8001/api/v1/post/12/xml -b "Authorization=Bearer
 curl -i -X GET http://localhost:8001/api/v1/post/12/json -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo"
 
 // create post
-curl -i -X POST http://localhost:8001/api/v1/post -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo" -d '{"title": "ggggg", "body": "vvvvvvv"}'
+curl -i -X POST http://localhost:8001/api/v1/post -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI1LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5Mzc1NDQ0LCJpc3MiOiJBdXRoU2VydmljZSJ9.Pd7ZHRzkNEonx3653pi9MJI-kySxOcDER7Roakt0e3E" -d '{"title": "ggggg", "body": "vvvvvvv"}'
 
 // update post
 curl -i -X PUT http://localhost:8001/api/v1/post/11 -H 'Content-Type: application/json' -b "Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI0LCJFbWFpbCI6ImJyb0BmZmZmZmYuY29tIiwiZXhwIjoxNjE5MTE3NjUyLCJpc3MiOiJBdXRoU2VydmljZSJ9.l5Sk2bbfKr9-q-dM_BaB_vTGb9aCNjNL4VXewVMzHLo" -d '{"title": "hhhhh", "body": "hhhhh"}'

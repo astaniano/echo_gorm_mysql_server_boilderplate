@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/labstack/echo/v4"
-	echoSwagger "github.com/swaggo/echo-swagger"
 	"log"
 	"myapp/constants"
 	"myapp/database"
@@ -29,7 +28,6 @@ func main() {
 	}
 
 	e := echo.New()
-	e.GET("/swagger/*", echoSwagger.WrapHandler)
 	validators.InitValidator(e)
 	routes.SetupRouter(e)
 

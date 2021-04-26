@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/labstack/echo/v4"
+	echoSwagger "github.com/swaggo/echo-swagger"
 	"myapp/controllers/oauth_controller"
 	"myapp/controllers/post_controller"
 	"myapp/controllers/user_controller"
@@ -9,6 +10,8 @@ import (
 )
 
 func SetupRouter(e *echo.Echo) {
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+
 	api := e.Group("/api/v1")
 	{
 		api.POST("/signup", user_controller.Signup)
@@ -48,3 +51,18 @@ func SetupRouter(e *echo.Echo) {
 		}
 	}
 }
+
+// CSRF CHECKING
+//	e.GET("/csrf/check", func(c echo.Context) error {
+//		resHtml := `<h1>hi</h1>
+//<script>
+//const response = fetch('http://localhost:8001/api/v1/login', {
+//method: 'POST',
+//headers: {
+//  'Content-Type': 'application/json'
+//},
+//body: JSON.stringify({"email": "bro@ffffff.com", "password": "123456"})
+//});
+//</script>`
+//		return c.HTML(200, resHtml)
+//	})
