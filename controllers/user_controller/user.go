@@ -27,7 +27,7 @@ type SignupPayload struct {
 // @Accept  json
 // @Produce  json
 // @Param user_info body SignupPayload true "Sign up the user"
-// @Success 201 {object} models_user.User
+// @Success 201 {object} models.User
 // @Failure 400 {object} helpers.Response
 // @Failure 500 {object} helpers.Response
 // @Router /api/signup [post]

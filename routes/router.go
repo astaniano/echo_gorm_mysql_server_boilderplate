@@ -10,6 +10,7 @@ import (
 )
 
 func SetupRouter(e *echo.Echo) {
+	// http://localhost:8001/swagger/index.html
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	api := e.Group("/api/v1")

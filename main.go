@@ -3,12 +3,12 @@ package main
 import (
 	"github.com/labstack/echo/v4"
 	"log"
-	"myapp/constants"
 	"myapp/database"
 	_ "myapp/docs"
 	"myapp/helpers"
 	"myapp/routes"
 	"myapp/validators"
+	"os"
 )
 
 // @title jph_app
@@ -31,5 +31,5 @@ func main() {
 	validators.InitValidator(e)
 	routes.SetupRouter(e)
 
-	e.Logger.Fatal(e.Start(constants.PORT))
+	e.Logger.Fatal(e.Start(os.Getenv("PORT")))
 }

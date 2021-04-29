@@ -13,7 +13,7 @@ var fbOauthConfig *oauth2.Config
 
 func FBLogin(c echo.Context) error {
 	fbOauthConfig = &oauth2.Config{
-		RedirectURL:  constants.HOST + constants.PORT + "/api/v1/login/fb/callback",
+		RedirectURL:  os.Getenv("HOST") + os.Getenv("PORT") + "/api/v1/login/fb/callback",
 		ClientID:     os.Getenv("FB_CLIENT_ID"),
 		ClientSecret: os.Getenv("FB_CLIENT_SECRET"),
 		Scopes:       []string{"public_profile", "email"},

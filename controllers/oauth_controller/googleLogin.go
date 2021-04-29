@@ -13,7 +13,7 @@ var googleOauthConfig *oauth2.Config
 
 func GoogleLogin(c echo.Context) error {
 	googleOauthConfig = &oauth2.Config{
-		RedirectURL:  constants.HOST + constants.PORT + "/api/v1/login/google/callback",
+		RedirectURL:  os.Getenv("HOST") + os.Getenv("PORT") + "/api/v1/login/google/callback",
 		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"},
