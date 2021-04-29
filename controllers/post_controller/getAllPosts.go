@@ -9,7 +9,12 @@ import (
 	"net/http"
 )
 
-func getAllPosts(c echo.Context, responseType string) error {
+func GetAllPosts(c echo.Context) error {
+	responseType := c.QueryParam("type")
+	if responseType != constants.JSON && responseType != constants.XML {
+		return c.JSON(http.StatusBadRequest, helpers.Res("unknown type of response"))
+	}
+
 	var postModel models.Post
 	postsFromDB, err := postModel.GetAllPosts()
 	if err != nil {
@@ -24,14 +29,4 @@ func getAllPosts(c echo.Context, responseType string) error {
 		return c.XML(http.StatusOK, &allPosts{Posts: postsFromDB})
 	}
 	return c.JSON(http.StatusOK, &postsFromDB)
-}
-
-// retrieves post from db
-func GetAllPostsXML(c echo.Context) error {
-	return getAllPosts(c, "XML")
-}
-
-// retrieves post from db
-func GetAllPostsJSON(c echo.Context) error {
-	return getAllPosts(c, "JSON")
 }

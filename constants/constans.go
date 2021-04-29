@@ -2,5 +2,6 @@ package constants
 
 const (
 	OAUTH_STATE_STRING = "random11111111111"
-	XML = "XML"
+	XML = "xml"
+	JSON = "json"
 )

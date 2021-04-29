@@ -9,7 +9,12 @@ import (
 	"strconv"
 )
 
-func getPost(c echo.Context, responseType string) error {
+func GetPost(c echo.Context) error {
+	responseType := c.QueryParam("type")
+	if responseType != constants.JSON && responseType != constants.XML {
+		return c.JSON(http.StatusBadRequest, helpers.Res("unknown type of response"))
+	}
+
 	postIdFromReq, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helpers.Res("postID was not in the url"))
@@ -25,14 +30,4 @@ func getPost(c echo.Context, responseType string) error {
 		return c.XML(http.StatusOK, postFromDB)
 	}
 	return c.JSON(http.StatusOK, postFromDB)
-}
-
-// retrieves post from db
-func GetPostXML(c echo.Context) error {
-	return getPost(c, "XML")
-}
-
-// retrieves post from db
-func GetPostJSON(c echo.Context) error {
-	return getPost(c, "JSON")
 }

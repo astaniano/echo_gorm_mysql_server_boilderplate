@@ -41,10 +41,8 @@ func SetupRouter(e *echo.Echo) {
 
 			post := authenticated.Group("/post")
 			{
-				post.GET("/json", post_controller.GetAllPostsJSON)
-				post.GET("/xml", post_controller.GetAllPostsXML)
-				post.GET("/:id/json", post_controller.GetPostJSON)
-				post.GET("/:id/xml", post_controller.GetPostXML)
+				post.GET("", post_controller.GetAllPosts)
+				post.GET("/:id", post_controller.GetPost)
 				post.POST("", post_controller.CreatePost)
 				post.PUT("/:id", post_controller.UpdatePost)
 				post.DELETE("/:id", post_controller.DeletePost)
