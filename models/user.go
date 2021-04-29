@@ -7,17 +7,27 @@ import (
 
 // User defines the user in db
 type User struct {
-	ID        int    `gorm:"primary_key;AUTO_INCREMENT" json:"id"`
-	FirstName string `gorm:"type:VARCHAR(100);NOT NULL" json:"first_name" validate:"required"`
-	LastName  string `gorm:"type:VARCHAR(100);NOT NULL" json:"last_name" validate:"required"`
-	Email     string `gorm:"type:VARCHAR(255);NOT NULL;UNIQUE" json:"email" validate:"required,email"`
-	Password  string `gorm:"type:CHAR(60);NOT NULL" json:"password" validate:"required"`
+	ID        int    `gorm:"primary_key;AUTO_INCREMENT"`
+	FirstName string `gorm:"type:VARCHAR(100);NOT NULL"`
+	LastName  string `gorm:"type:VARCHAR(100);NOT NULL"`
+	Email     string `gorm:"type:VARCHAR(255);NOT NULL;UNIQUE"`
+	Password  string `gorm:"type:CHAR(60);NOT NULL"`
 	Posts     []Post
+}
+
+// FindUserByEmail searches for the user in the database by email
+func (user *User) FindUserByEmail(email string) error {
+	result := database.DB.Where("email = ?", email).First(user)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
 }
 
 // CreateUserRecord creates a controllers_post record in the database
 func (user *User) CreateUserRecord() error {
-	result := database.DB.Create(&user)
+	result := database.DB.Create(user)
 	if result.Error != nil {
 		return result.Error
 	}

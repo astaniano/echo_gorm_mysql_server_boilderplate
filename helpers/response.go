@@ -6,6 +6,5 @@ type Response struct {
 
 // return example { Message: "Error 1062: Duplicate entry 'bro@gmail.com' for key 'users.email'"}
 func Res(msg string) *Response {
-	res := &Response{Message: msg}
-	return res
+	return &Response{Message: msg}
 }

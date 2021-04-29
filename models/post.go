@@ -54,7 +54,7 @@ func (post *Post) UpdatePostRecord() error {
 
 // DeletePostByID updates a post record in the database
 func (post *Post) DeletePost() error {
-	result := database.DB.Delete(post)
+	result := database.DB.Unscoped().Delete(post)
 	if result.Error != nil {
 		return result.Error
 	}

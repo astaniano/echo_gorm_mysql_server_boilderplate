@@ -1,13 +1,11 @@
 package auth
 
 import (
-	"os"
-	"testing"
-
 	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
-func TestGenerateToken(t *testing.T) {
+func TestValidateToken(t *testing.T) {
 	jwtWrapper := JwtWrapper{
 		SecretKey:       "verySecret",
 		Issuer:          "AuthService",
@@ -17,18 +15,7 @@ func TestGenerateToken(t *testing.T) {
 	generatedToken, err := jwtWrapper.GenerateToken("jwt@email.com", 1)
 	assert.NoError(t, err)
 
-	os.Setenv("testToken", generatedToken)
-}
-
-func TestValidateToken(t *testing.T) {
-	encodedToken := os.Getenv("testToken")
-
-	jwtWrapper := JwtWrapper{
-		SecretKey: "verySecret",
-		Issuer:    "AuthService",
-	}
-
-	claims, err := jwtWrapper.ValidateToken(encodedToken)
+	claims, err := jwtWrapper.ValidateToken(generatedToken)
 	assert.NoError(t, err)
 
 	assert.Equal(t, "jwt@email.com", claims.Email)

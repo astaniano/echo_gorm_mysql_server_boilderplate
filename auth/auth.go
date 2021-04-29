@@ -1,10 +1,9 @@
 package auth
 
-
 import (
 	"errors"
-	"time"
 	jwt "github.com/dgrijalva/jwt-go"
+	"time"
 )
 
 // JwtWrapper wraps the signing key and the issuer
@@ -17,14 +16,14 @@ type JwtWrapper struct {
 // JwtClaim adds email as a claim to the token
 type JwtClaim struct {
 	UserId int
-	Email string
+	Email  string
 	jwt.StandardClaims
 }
 
 // GenerateToken generates a jwt token
 func (j *JwtWrapper) GenerateToken(email string, userId int) (signedToken string, err error) {
 	claims := &JwtClaim{
-		Email: email,
+		Email:  email,
 		UserId: userId,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(j.ExpirationHours)).Unix(),
@@ -51,7 +50,6 @@ func (j *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaim, err er
 			return []byte(j.SecretKey), nil
 		},
 	)
-
 	if err != nil {
 		return
 	}
@@ -68,5 +66,4 @@ func (j *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaim, err er
 	}
 
 	return
-
 }

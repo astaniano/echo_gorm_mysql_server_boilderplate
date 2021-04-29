@@ -22,8 +22,11 @@ func TestHashPassword(t *testing.T) {
 func TestCreateUserRecord(t *testing.T) {
 	var userResult User
 
-	helpers.LoadEnvVariables()
-	err := database.InitDatabase()
+	err := helpers.LoadEnvVariables()
+	if err != nil {
+		return
+	}
+	err = database.InitDatabase()
 	if err != nil {
 		t.Error(err)
 	}

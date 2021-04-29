@@ -7,7 +7,9 @@ import (
 )
 
 func TestInitDB(t *testing.T) {
-	helpers.LoadEnvVariables()
-	err := InitDatabase()
+	err := helpers.LoadEnvVariables()
+	assert.NoError(t, err)
+
+	err = InitDatabase()
 	assert.NoError(t, err)
 }
