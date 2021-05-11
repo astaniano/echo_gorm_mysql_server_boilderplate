@@ -1,7 +1,7 @@
 package helpers
 
 type Response struct {
-	Message string `json:"msg"`
+	Message string `json:"message"`
 }
 
 // return example { Message: "Error 1062: Duplicate entry 'bro@gmail.com' for key 'users.email'"}

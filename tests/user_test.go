@@ -20,7 +20,8 @@ func (s *APITestSuite) TestUserSignUp() {
 	s.handler.InitRouter(e)
 
 	email, password, firstName, lastName := "bro55@ffffff.com", "12345678", "bro", "jjjj"
-	signUpData := fmt.Sprintf(`{"email":"%s","password":"%s","first_name":"%s","last_name":"%s"}`, email, password, firstName, lastName)
+	signUpData := fmt.Sprintf(`{"email":"%s","password":"%s","first_name":"%s","last_name":"%s"}`,
+		email, password, firstName, lastName)
 
 	req, err := http.NewRequest(echo.POST, "/api/v1/sign-up", strings.NewReader(signUpData))
 	s.NoError(err)

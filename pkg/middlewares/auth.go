@@ -2,7 +2,6 @@ package middlewares
 
 import (
 	"github.com/labstack/echo/v4"
-	"myapp/internal/helpers"
 	"myapp/pkg/auth"
 	"net/http"
 	"os"
@@ -15,7 +14,7 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 		// clientToken := c.Request().Header.Get("Authorization")
 		cookie, err := c.Cookie("Authorization")
 		if err != nil {
-			return err
+			return echo.NewHTTPError(http.StatusBadRequest, "Auth token was not passed in the cookie")
 		}
 
 		clientToken := cookie.Value
@@ -23,7 +22,7 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 		if len(extractedToken) == 2 {
 			clientToken = strings.TrimSpace(extractedToken[1])
 		} else {
-			return c.JSON(http.StatusBadRequest, helpers.Res("Incorrect Format of Authorization Token"))
+			return echo.NewHTTPError(http.StatusBadRequest, "Incorrect Format of Authorization Token")
 		}
 
 		jwtWrapper := auth.TokenManager{
@@ -32,7 +31,7 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		claims, err := jwtWrapper.ValidateToken(clientToken)
 		if err != nil {
-			return c.JSON(http.StatusUnauthorized, helpers.Res(err.Error()))
+			return echo.NewHTTPError(http.StatusUnauthorized, err.Error())
 		}
 
 		c.Set("email", claims.Email)

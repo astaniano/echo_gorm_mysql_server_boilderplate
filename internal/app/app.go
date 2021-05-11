@@ -20,9 +20,13 @@ import (
 // @title jph_app
 // @version 1.0
 // @description This is a pet project of written in echo
-// @termsOfService http://swagger.io/terms/
-// @contact.name API Support
-// @contact.email support@swagger.io
+
+// @host localhost:8001
+// @BasePath /api/v1/
+
+// @securityDefinitions.apikey UserAuth
+// @in cookie
+// @name Authorization
 
 func InitApp() error {
 	err := helpers.LoadConfig()
