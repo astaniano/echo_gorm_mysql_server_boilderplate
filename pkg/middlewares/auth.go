@@ -26,7 +26,7 @@ func Authz(next echo.HandlerFunc) echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, helpers.Res("Incorrect Format of Authorization Token"))
 		}
 
-		jwtWrapper := auth.JwtWrapper{
+		jwtWrapper := auth.TokenManager{
 			SecretKey: os.Getenv("ACCESS_TOKEN_SECRET_KEY"),
 			Issuer:    "AuthService",
 		}

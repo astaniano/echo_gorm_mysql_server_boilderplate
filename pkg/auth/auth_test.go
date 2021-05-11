@@ -6,7 +6,7 @@ import (
 )
 
 func TestValidateToken(t *testing.T) {
-	jwtWrapper := JwtWrapper{
+	jwtWrapper := TokenManager{
 		SecretKey:       "verySecret",
 		Issuer:          "AuthService",
 		ExpirationHours: 24,

@@ -1,4 +1,4 @@
-package service
+package common_services
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -6,14 +6,16 @@ import (
 )
 
 func TestHashPassword(t *testing.T) {
-	_, err := hashPassword("secret")
+	hasher := AppHasher{}
+	_, err := hasher.HashPassword("secret")
 	assert.NoError(t, err)
 }
 
 func TestCheckPassword(t *testing.T) {
-	hashedPass, err := hashPassword("secret")
+	hasher := AppHasher{}
+	hashedPass, err := hasher.HashPassword("secret")
 	assert.NoError(t, err)
 
-	err = checkPassword(hashedPass, "secret")
+	err = hasher.CheckPassword(hashedPass, "secret")
 	assert.NoError(t, err)
 }

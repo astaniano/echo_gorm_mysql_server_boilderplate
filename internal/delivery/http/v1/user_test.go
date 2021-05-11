@@ -70,7 +70,7 @@ func TestHandler_signUp(t *testing.T) {
 		// initialize the echo context to use for the test
 		e := echo.New()
 		validators.InitValidator(e)
-		r, err := http.NewRequest(echo.POST, "http://localhost:8001/api/v1/sign-up", strings.NewReader(test.input))
+		r, err := http.NewRequest(echo.POST, "/api/v1/sign-up", strings.NewReader(test.input))
 		if err != nil {
 			t.Fatal("could not create request")
 		}

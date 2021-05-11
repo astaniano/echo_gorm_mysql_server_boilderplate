@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-// JwtWrapper wraps the signing key and the issuer
-type JwtWrapper struct {
+// TokenManager wraps the signing key and the issuer
+type TokenManager struct {
 	SecretKey       string
 	Issuer          string
 	ExpirationHours int64
@@ -21,7 +21,7 @@ type JwtClaim struct {
 }
 
 // GenerateToken generates a jwt token
-func (j *JwtWrapper) GenerateToken(email string, userId int) (signedToken string, err error) {
+func (j *TokenManager) GenerateToken(email string, userId int) (signedToken string, err error) {
 	claims := &JwtClaim{
 		Email:  email,
 		UserId: userId,
@@ -42,7 +42,7 @@ func (j *JwtWrapper) GenerateToken(email string, userId int) (signedToken string
 }
 
 //ValidateToken validates the jwt token
-func (j *JwtWrapper) ValidateToken(signedToken string) (claims *JwtClaim, err error) {
+func (j *TokenManager) ValidateToken(signedToken string) (claims *JwtClaim, err error) {
 	token, err := jwt.ParseWithClaims(
 		signedToken,
 		&JwtClaim{},

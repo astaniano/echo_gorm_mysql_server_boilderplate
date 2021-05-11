@@ -1,11 +1,11 @@
 package service
 
 import (
-	"golang.org/x/crypto/bcrypt"
 	"myapp/internal/models"
 	"myapp/internal/repository"
 	"myapp/internal/shared/payloads"
 	"myapp/pkg/auth"
+	"myapp/pkg/common_services"
 	"os"
 )
 
@@ -17,28 +17,9 @@ func NewUserService(repo repository.User) *UserService {
 	return &UserService{repo: repo}
 }
 
-// HashPassword encrypts controllers_post password
-func hashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	if err != nil {
-		return "", err
-	}
-
-	return string(bytes), nil
-}
-
-// CheckPassword checks user password
-func checkPassword(passwordInDB, providedPassword string) error {
-	err := bcrypt.CompareHashAndPassword([]byte(passwordInDB), []byte(providedPassword))
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (s *UserService) SignUp(payload *payloads.SignUpPayload) (error) {
-	hashedPass, err := hashPassword(payload.Password)
+	hasher := common_services.AppHasher{}
+	hashedPass, err := hasher.HashPassword(payload.Password)
 	if err != nil {
 		return err
 	}
@@ -60,17 +41,18 @@ func (s *UserService) SignIn(payload *payloads.SignInPayload) (string, error) {
 		return "", err
 	}
 
-	err = checkPassword(user.Password, payload.Password)
+	hasher := common_services.AppHasher{}
+	err = hasher.CheckPassword(user.Password, payload.Password)
 	if err != nil {
 		return "", err
 	}
 
-	jwtWrapper := auth.JwtWrapper{
+	tokenManager := auth.TokenManager{
 		SecretKey:       os.Getenv("ACCESS_TOKEN_SECRET_KEY"),
 		Issuer:          "AuthService",
 		ExpirationHours: 24,
 	}
-	signedToken, err := jwtWrapper.GenerateToken(user.Email, user.ID)
+	signedToken, err := tokenManager.GenerateToken(user.Email, user.ID)
 	if err != nil {
 		return "", err
 	}

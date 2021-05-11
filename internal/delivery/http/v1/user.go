@@ -19,37 +19,36 @@ import (
 // @Failure 400 {object} helpers.Response
 // @Failure 500 {object} helpers.Response
 // @Router /api/signup [post]
-func (h *Handler) signUp(ctx echo.Context) error {
+func (h *Handler) signUp(c echo.Context) error {
 	payload := new(payloads.SignUpPayload)
-	if err := ctx.Bind(payload); err != nil {
+	if err := c.Bind(payload); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
-	if  err := ctx.Validate(payload); err != nil {
+	if  err := c.Validate(payload); err != nil {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err.Error())
 	}
 
 	err := h.services.User.SignUp(payload)
 	if err != nil {
-		println(err.Error())
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	return ctx.JSON(http.StatusCreated, helpers.Res("user was created"))
+	return c.JSON(http.StatusCreated, helpers.Res("user was created"))
 }
 
 // Login logs users in
 func (h *Handler) signIn(c echo.Context) error {
 	payload := new(payloads.SignInPayload)
 	if err := c.Bind(payload); err != nil {
-		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
+		return echo.NewHTTPError(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 	if err := c.Validate(payload); err != nil {
-		return c.JSON(http.StatusBadRequest, helpers.Res(err.Error()))
+		return echo.NewHTTPError(http.StatusBadRequest, helpers.Res(err.Error()))
 	}
 
 	signedToken, err := h.services.User.SignIn(payload)
 	if err != nil {
-		return c.JSON(http.StatusUnauthorized, helpers.Res(err.Error()))
+		return echo.NewHTTPError(http.StatusUnauthorized, helpers.Res(err.Error()))
 	}
 
 	cookie := &http.Cookie{
@@ -67,7 +66,7 @@ func (h *Handler) getUserProfile(c echo.Context) error {
 	email := c.Get("email") // from the authorization middleware
 	user, err := h.services.User.GetUserProfile(email.(string))
 	if err != nil {
-		return c.JSON(http.StatusNotFound, helpers.Res(err.Error()))
+		return echo.NewHTTPError(http.StatusNotFound, helpers.Res(err.Error()))
 	}
 
 	user.Password = ""
