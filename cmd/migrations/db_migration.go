@@ -16,6 +16,10 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
+	defer func() {
+		sqlDB, _ := db.DB()
+		sqlDB.Close()
+	}()
 
 	err = db.AutoMigrate(
 		&models.User{},
